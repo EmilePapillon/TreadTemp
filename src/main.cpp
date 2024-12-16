@@ -14,8 +14,6 @@ void setup()
   while (!Serial); // Wait for Serial
   Serial.printf("\nAttempting to start serial comms");
   Serial.printf("\nBegin startup. Arduino version: %d\n", ARDUINO);//
-  Serial.printf("Address of Wire object: %d", &Wire);
-  // Wire.begin(); // initialize I2C
   if(!temp_sensor.initialise(temp_sensor_refreash_rate, &Wire))
   {
     Serial.printf("\nFailed to initialize the temperature sensor\n");

@@ -6,26 +6,21 @@ static constexpr uint32_t CLOCK_FREQUENCY_Hz{1000};
 
 boolean MLX90641::initialise(int refrate, TwoWire *thisI2c) {
   bool success = MLX90641_I2CInit(MLX90641_ADDRESS);
-  Serial.println("1");
   if (!success)
   {
     return false;
   }
   MLX90641_I2CFreqSet(CLOCK_FREQUENCY_Hz); //Changing gears, ensure that I2C clock speed set to 1MHz
-  Serial.println("2");
-
   uint16_t eeMLX90641[832];
   if (MLX90641_DumpEE(MLX90641_ADDRESS, eeMLX90641) != 0) {
     Serial.println("ERROR: Failed to load MLX90641 system parameters.");
     return false;
   }
-  Serial.println("3");
 
   if (MLX90641_ExtractParameters(eeMLX90641, &mlx90641) != 0) {
     Serial.printf("ERROR: MLX90641 Parameter extraction failed.\n");
     return false;
   }
-  Serial.println("4");
 
   byte Hz;
   switch (refrate) {
@@ -44,7 +39,6 @@ boolean MLX90641::initialise(int refrate, TwoWire *thisI2c) {
     Serial.println("ERROR: Setting MLX90641 refresh rate failed.");
     return false;
   }
-  Serial.println("5");
 
   initialized_ = true;
   Serial.printf("MLX90641 initialised correctly at I2C address %u...\n", MLX90641_ADDRESS);
