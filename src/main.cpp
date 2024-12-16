@@ -11,11 +11,11 @@ void setup()
 {
   delay(5000);
   Serial.begin(115200);
-  Serial.printf("\nAttempting to start serial comms");
   while (!Serial); // Wait for Serial
-  Serial.printf("\nBegin startup. Arduino version: %d\n", ARDUINO);
-
-  Wire.begin(); // initialize I2C
+  Serial.printf("\nAttempting to start serial comms");
+  Serial.printf("\nBegin startup. Arduino version: %d\n", ARDUINO);//
+  Serial.printf("Address of Wire object: %d", &Wire);
+  // Wire.begin(); // initialize I2C
   if(!temp_sensor.initialise(temp_sensor_refreash_rate, &Wire))
   {
     Serial.printf("\nFailed to initialize the temperature sensor\n");
@@ -33,12 +33,6 @@ void loop()
   Serial.printf("In main loop, iteration:%d\n ", iteration);
   if (sensor_init_succeded)
   {
-    if (temp_sensor.isConnected())
-    {
-      Serial.println("The init succeeded, and the temp sensor reports it IS connected");
-    } else {
-      Serial.println("The init succeeded, but the temp sensor reports it is NOT connected");
-    }
   } else {
     Serial.println("The init failed");
   }

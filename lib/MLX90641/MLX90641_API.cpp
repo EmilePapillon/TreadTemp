@@ -16,6 +16,7 @@
  */
 #include <MLX90641_I2C_Driver.hpp>
 #include <MLX90641_API.hpp>
+#include <Arduino.h> // for debugging statements
 #include <math.h>
 
 void ExtractVDDParameters(uint16_t *eeData, paramsMLX90641 *mlx90641);
@@ -42,12 +43,14 @@ int ValidateAuxData(uint16_t *auxData);
 int MLX90641_DumpEE(uint8_t slaveAddr, uint16_t *eeData)
 {
      int error = 1;
+     Serial.println("10");
      error = MLX90641_I2CRead(slaveAddr, 0x2400, 832, eeData);
      if (error == 0)
      {
+        Serial.println("11");
         error = HammingDecode(eeData);  
      }
-         
+     Serial.println("12");
      return error;
 }
 
